@@ -39,22 +39,22 @@ iii.	Waiting for the process to be terminated if the command is delimited by ';'
 
 ### Objective:
 
-In this lab, you will write a simple shell by your own. In this shell, it takes an input command, and then executes it. Your shell should implement the followings:
-•	Take external commands, such as, ls, emacs and so on.
-•	Take internal commands
-o	exit: terminate the shell.
-o	print: print out the current pid.
-o	help: help information of your shell.
-•	Using “&” to implement multiple commands in one line
+In this lab, you will write a simple shell by your own. In this shell, it takes an input command, and then executes it. Your shell should implement the followings:  
+•	Take external commands, such as, ls, emacs and so on.  
+•	Take internal commands. 
+o	exit: terminate the shell.  
+o	print: print out the current pid.  
+o	help: help information of your shell.  
+•	Using “&” to implement multiple commands in one line.  
 
-
+  
 #### Descriptions:
-
-•	The input to the shell is a sequence of lines. The shell must correctly handle lines of up to 100 characters. If a line containing more than 100 characters is submitted to the shell, it should print some kind of error message and truncate it to 100 characters. 
-•	Each line consists of tokens. Tokens are separated by one or more spaces. A line may contain as many tokens as can fit into 100 characters. 
-•	Words consist of the characters A–Z, a–z, 0–9, dash, dot, forward slash, and underscore. If a word in a line of input to the shell contains any character not in this set, then the shell should print an error message and then ignore the rest. 
-•	Lines of input are divided into token groups. Each token group will result in the shell forking a new process and then executing a program. 
-•	Every token group must begin with a word that is called the command. The words immediately following a command are called arguments and each argument belongs to the command it most closely follows. The order of arguments matters, and they are numbered from left to right, starting at one. 
+  
+•	The input to the shell is a sequence of lines. The shell must correctly handle lines of up to 100 characters. If a line containing more than 100 characters is submitted to the shell, it should print some kind of error message and truncate it to 100 characters.  
+•	Each line consists of tokens. Tokens are separated by one or more spaces. A line may contain as many tokens as can fit into 100 characters.  
+•	Words consist of the characters A–Z, a–z, 0–9, dash, dot, forward slash, and underscore. If a word in a line of input to the shell contains any character not in this set, then the shell should print an error message and then ignore the rest.  
+•	Lines of input are divided into token groups. Each token group will result in the shell forking a new process and then executing a program.  
+•	Every token group must begin with a word that is called the command. The words immediately following a command are called arguments and each argument belongs to the command it most closely follows. The order of arguments matters, and they are numbered from left to right, starting at one.  
 
 ### System Calls:
 •	fork()
