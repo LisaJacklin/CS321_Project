@@ -25,14 +25,18 @@ int main() {
         if (!fgets(input, MAX_CMD_LEN, stdin))
             break;
 
-        // Parse command into arguments
-        int i = 0;
-        args[i] = strtok(input, " \t\n&"); //included the & here
-        while (args[i] && i < MAX_ARGS - 1) {
-            i++;
-            args[i] = strtok(NULL, " \t\n&"); //and included the & here
-        } //these & inclusions should allow us adjust the parsing when & is seen 
-        args[i] = NULL;
+      // Parse command into arguments
+int i = 0;
+args[i] = strtok(input, " \t\n");
+while (args[i] && i < MAX_ARGS - 1) {
+    i++;
+    args[i] = strtok(NULL, " \t\n");
+}
+
+// Check if the last argument is the '&' symbol
+if (i > 0 && strcmp(args[i-1], "&") == 0) {
+    // Multiple commands, split them and execute in parallel
+    args[i-1] = NULL; // Remove the '&' symbol from the argument list
 
         // Handle internal commands
         if (args[0] && strcmp(args[0], "exit") == 0)
@@ -65,39 +69,6 @@ int main() {
                 if (!strchr(input, '&'))
                     waitpid(pid, &status, 0);
             }
-	//within the while (1) loop im hoping...
-
-// Handle external commands
-//this code should be used when the & is used to run both commands rather than a single one
-char *cmd = args[0];
-while (cmd != NULL) {
-    pid_t pid = fork();
-    if (pid == -1) {
-        perror("fork");
-        exit(EXIT_FAILURE);
-    }
-    else if (pid == 0) {
-        // Child process
-        char *cmd_args[MAX_ARGS];
-        int j = 0;
-        cmd_args[j] = cmd;
-        while (args[j] && strcmp(args[j], "&") != 0 && j < MAX_ARGS - 1) {
-            j++;
-            cmd_args[j] = args[j];
-        }
-        cmd_args[j] = NULL;
-        execvp(cmd_args[0], cmd_args);
-        perror(cmd_args[0]);
-        exit(EXIT_FAILURE);
-    }
-    else {
-        // Parent process
-        if (!strchr(input, '&'))
-            waitpid(pid, &status, 0);
-    }
-    cmd = args[i+1];
-}
-
 
         }
     }
